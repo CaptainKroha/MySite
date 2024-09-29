@@ -71,5 +71,11 @@ function validateContacts() {
 }
 
 function validateTest() {
-
+    questionElement = document.forms["mainForm"]["q2"];
+    value = Number(questionElement.value);
+    if(Number.isNaN(value) || value % 1 == 0) {
+        alert("Во втором вопросе должно быть введено вещественное число\nДля записи используется .");
+        questionElement.focus();
+        return false;
+    }
 }
