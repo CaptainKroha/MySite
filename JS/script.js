@@ -1,14 +1,12 @@
 function printAlbum(){
     var photos = new Array();
-    for(var i = 1; i < 16;i++)
-    {
+    for(var i = 1; i < 16;i++) {
         photos[i-1] = "IMGS/" + i + ".jpg";
     }
     var titles = new Array("Колбаски на костре", "Романтический ужин", "Вкусные роллы", "Конь", "Брату 17 лет", "Сидящий человек",
         "Водопад в Абхазии", "Горы Абхазии", "Еще водопал Абхазии", "И еще горы Абхазии", "И снова горы Абхазии", "Цветочки",
         "Еще цветочки", "Киска 1", "Киска 2");
-    for(var i = 0; i < 15; i+=3)
-    {
+    for(var i = 0; i < 15; i+=3) {
         document.write(
             '<div class="album-row">',
                 '<div class="album-item">',
@@ -30,10 +28,21 @@ function printAlbum(){
 
 function printListOfInterests(anc_name, title){
     document.write('<section><h2><a name=', anc_name,'>', title,'</a></h2>');
-    for(var i = 2; i < printListOfInterests.arguments.length; i++)
-    {
+    for(var i = 2; i < printListOfInterests.arguments.length; i++) {
         item = printListOfInterests.arguments[i];
         document.write('<article><h3>', item[0],'</h3>', '<img src=', item[1], ' width="200px">', '<p class="text">', item[2],'</p></article>');
     }
     document.write('</section>');
+}
+
+function validateForm(){
+    var formElements = document.forms["mainForm"].elements;
+    for(var i = 0; i < formElements.length; i++) {
+        item = formElements[i];
+        if(item.type == "text" && item.value == "") {
+            alert("Поле " + item.title + " должно быть заполнено");
+            item.focus();
+            return false;
+        }
+    }
 }

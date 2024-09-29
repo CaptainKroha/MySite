@@ -4,11 +4,12 @@
     <meta charset="utf-8" />
     <link rel="stylesheet" type="text/css" href="style.css"/>
     <title>Персональный сайт Ипатова Сергея. Контакт.</title>
+    <script src="JS/script.js"></script>
   </head>
   <body>
     <h1>Заполни анкету для связи со мной!</h1>
-    <form method="POST" action="" >
-      ФИО: <input name="FIO" type="text" size="50">
+    <form name ="mainForm" method="POST" action="mailto:justsenya300@mail.ru" onsubmit="return validateForm()">
+      ФИО: <input title="ФИО" name="FIO" type="text" size="50">
       <p>
         Пол:
         Мужской<input name="pol" type="radio" value="male"checked>
@@ -23,7 +24,7 @@
           <option>больше 30</option>
         </select>
       </p>
-      E-mail: <input name="mail" type="text" size="30"> <br><br>
+      E-mail: <input title="E-mail" name="mail" type="text" size="30"> <br><br>
       <input type="submit">
       <input type="reset">
     </form>

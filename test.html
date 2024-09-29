@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Персональный сайт Ипатова Сергея. Тест по БЖД.</title>
+    <script src="JS/script.js"></script>
 </head>
 <body>
     <h1>Семь раз подумай, один раз ответь</h1>
-    <form method="POST" action="">
-        ФИО: <input name="FIO" type="text" size="50">
+    <form name="mainForm" method="POST" action="" onsubmit="return validateForm()">
+        ФИО: <input title="ФИО" name="FIO" type="text" size="50">
         <p>
             Группа:
             <select name="groups">
@@ -30,7 +31,7 @@
             <p>Вопрос 1) Сколько основных групп опасностей изучает БДЖ?</p>
             <select name="q1groups">
                 <optgroup label="до 5">
-                    <option value="1">1</option>
+                    <option value="1" checked>1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
                     <option value="4">4</option>
@@ -44,9 +45,9 @@
             <p>Вопрос 2) Совокупность условий и обстоятельств, создающих опасную для жизнедеятельности <br>
                         человека обстановку на конкретном объекте, территории (акватории), возникших в результате<br>
                         аварии или катастрофы, опасного природного явления. Что это?</p>
-            Ответ: <input type="text" name="q2">
+            Ответ: <input title="Вопрос 2" type="text" name="q2">
             <p>Вопрос 3) Землетрясение это ЧС ... характера. Выбери пропущенное слово.</p>
-            Природного<input name="q3" type="radio" value="nature">
+            Природного<input name="q3" type="radio" value="nature" checked>
             Антропогенного<input name="q3" type="radio" value="human">
             <br><br>
             <input type="submit">
