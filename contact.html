@@ -8,7 +8,7 @@
   </head>
   <body>
     <h1>Заполни анкету для связи со мной!</h1>
-    <form name ="mainForm" method="POST" action="mailto:justsenya300@mail.ru" onsubmit="return validateForm()">
+    <form name ="mainForm" method="POST" action="" onsubmit="return validateForm()">
       ФИО: <input title="ФИО" name="FIO" type="text" size="50">
       <p>
         Пол:
@@ -24,7 +24,13 @@
           <option>больше 30</option>
         </select>
       </p>
-      E-mail: <input title="E-mail" name="mail" type="text" size="30"> <br><br>
+
+      <p> E-mail: <input title="E-mail" name="mail" type="text" size="30"> </p>
+      
+      <p> Моб.тел.: <input title="Мобильный телефон" name="phone" type="text" size="30"> </p>
+      
+      <br><br>
+
       <input type="submit">
       <input type="reset">
     </form>

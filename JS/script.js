@@ -1,4 +1,4 @@
-function printAlbum(){
+function printAlbum() {
     var photos = new Array();
     for(var i = 1; i < 16;i++) {
         photos[i-1] = "IMGS/" + i + ".jpg";
@@ -26,7 +26,7 @@ function printAlbum(){
     }
 }
 
-function printListOfInterests(anc_name, title){
+function printListOfInterests(anc_name, title) {
     document.write('<section><h2><a name=', anc_name,'>', title,'</a></h2>');
     for(var i = 2; i < printListOfInterests.arguments.length; i++) {
         item = printListOfInterests.arguments[i];
@@ -35,7 +35,8 @@ function printListOfInterests(anc_name, title){
     document.write('</section>');
 }
 
-function validateForm(){
+function validateForm() {
+    // Проверка заполненности текстовых полей
     var formElements = document.forms["mainForm"].elements;
     for(var i = 0; i < formElements.length; i++) {
         item = formElements[i];
@@ -45,4 +46,30 @@ function validateForm(){
             return false;
         }
     }
+
+    if(document.URL.search("contact.html") != -1) { return validateContacts();}
+    else if(document.URL.search("test.html") != -1) {return validateTest();}
+}
+
+function validateContacts() {
+    var fioElement = document.forms["mainForm"]["FIO"];
+    const fioPattern = /[А-Я][а-я]+ [А-Я][а-я]+ [А-Я][а-я]+/;
+    
+    var phoneElement = document.forms["mainForm"]["phone"];
+    const phonePattern = /^(\+7|\+3)\d{8,10}$/;
+
+    if(!fioPattern.test(fioElement.value)) {
+        alert("ФИО заполнено некорретно");
+        fioElement.focus();
+        return false;
+    }
+    if (!phonePattern.test(phoneElement.value)) {
+        alert("Мобильный телефон заполнен некорректно");
+        phoneElement.focus();
+        return false;
+    }
+}
+
+function validateTest() {
+
 }
