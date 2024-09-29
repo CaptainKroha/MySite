@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Персональный сайт Ипатова Сергея. Тест по БЖД.</title>
+</head>
+<body>
+    <h1>Семь раз подумай, один раз ответь</h1>
+    <form method="POST" action="">
+        ФИО: <input name="FIO" type="text" size="50">
+        <p>
+            Группа:
+            <select name="groups">
+                <optgroup label="1 курс">
+                    <option value="241">ИТ-24-1</option>
+                    <option value="242">ИТ-24-2</option>
+                </optgroup>
+                <optgroup label="2 курс">
+                    <option value="231">ИТ-23-1</option>
+                    <option value="232">ИТ-23-2</option>
+                </optgroup>
+                <optgroup label="3 курс">
+                    <option value="221">ИТ-22-1</option>
+                    <option value="222">ИТ-22-2</option>
+                </optgroup>
+            </select> 
+        </p>
+        <fieldset>
+            <legend>Тест</legend>
+            <p>Вопрос 1) Сколько основных групп опасностей изучает БДЖ?</p>
+            <select name="q1groups">
+                <optgroup label="до 5">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </optgroup>
+                <optgroup label="от 5">
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>   
+                </optgroup>
+            </select>
+            <p>Вопрос 2) Совокупность условий и обстоятельств, создающих опасную для жизнедеятельности <br>
+                        человека обстановку на конкретном объекте, территории (акватории), возникших в результате<br>
+                        аварии или катастрофы, опасного природного явления. Что это?</p>
+            Ответ: <input type="text" name="q2">
+            <p>Вопрос 3) Землетрясение это ЧС ... характера. Выбери пропущенное слово.</p>
+            Природного<input name="q3" type="radio" value="nature">
+            Антропогенного<input name="q3" type="radio" value="human">
+            <br><br>
+            <input type="submit">
+            <input type="reset">
+        </fieldset>
+    </form>
+    <a href="main.html">Вернуться на главную</a>
+</body>
+</html>
