@@ -1,5 +1,5 @@
 function printAlbum() {
-    var photos = new Array();
+    var photos = [];
     for(var i = 1; i < 16;i++) {
         photos[i-1] = "IMGS/" + i + ".jpg";
     }
@@ -29,7 +29,7 @@ function printAlbum() {
 function printListOfInterests(anc_name, title) {
     document.write('<section><h2><a name=', anc_name,'>', title,'</a></h2>');
     for(var i = 2; i < printListOfInterests.arguments.length; i++) {
-        item = printListOfInterests.arguments[i];
+        var item = printListOfInterests.arguments[i];
         document.write('<article><h3>', item[0],'</h3>', '<img src=', item[1], ' width="200px">', '<p class="text">', item[2],'</p></article>');
     }
     document.write('</section>');
@@ -39,7 +39,7 @@ function validateForm() {
     // Проверка заполненности текстовых полей
     var formElements = document.forms["mainForm"].elements;
     for(var i = 0; i < formElements.length; i++) {
-        item = formElements[i];
+        var item = formElements[i];
         if(item.type == "text" && item.value == "") {
             alert("Поле " + item.title + " должно быть заполнено");
             item.focus();
@@ -71,8 +71,8 @@ function validateContacts() {
 }
 
 function validateTest() {
-    questionElement = document.forms["mainForm"]["q2"];
-    value = Number(questionElement.value);
+    var questionElement = document.forms["mainForm"]["q2"];
+    var value = Number(questionElement.value);
     if(Number.isNaN(value) || value % 1 == 0) {
         alert("Во втором вопросе должно быть введено вещественное число\nДля записи используется .");
         questionElement.focus();
