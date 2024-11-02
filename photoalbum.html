@@ -4,24 +4,17 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="style.css"/>
     <title>Персональный сайт Ипатова Сергея. Фотоальбом.</title>
-    <style type="text/css">
-        img {
-            height: 200px;
-        }
-        nav {
-            margin-top: 20px;
-        }
-        h1 {
-            text-align: center;
-        }
-    </style>
     <script src="JS/script.js"></script>
+    <script>window.onload = savePageView</script>
 </head>
 <body>
-    <h1>Фотоальбом</h1>
+    <h1 class="center">Фотоальбом</h1>
     <section class="album-body">
         <script>printAlbum()</script>
     </section>
-    <nav><a href="main.html">Главная страница</a></nav>
+    <div id="overlay" class="overlay" onclick="closeOverlay()">
+        <img id="largeImage" src="" />
+    </div>
+    <nav class="center" style="margin-top: 20px;"><a class="return-ref" href="main.html">Вернуться на главную</a></nav>
 </body>
 </html>

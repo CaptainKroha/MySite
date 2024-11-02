@@ -5,6 +5,7 @@
     <link rel="stylesheet" type="text/css" href="style.css"/>
     <title>Персональный сайт Ипатова Сергея. Мои интересы.</title>
     <script src="JS/script.js"></script>
+    <script>window.onload = savePageView</script>
   </head>
   <body>
     <header>
@@ -12,11 +13,24 @@
         <ul>
           <li><a href="main.html">Главная</a></li>
           <li><a href="about_me.html">Обо мне</a></li>
-          <li><a href="interests.html">Мои интересы</a></li>
+          <li class="current">
+            <a href="interests.html">Мои интересы</a>
+            <ul>
+              <li><a href="interests.html#fav_books">Любимые книги</a></li>
+              <li><a href="interests.html#fav_movies">Любимые фильмы</a></li>
+              <li><a href="interests.html#fav_langs">Любимые ЯП</a></li>
+            </ul>
+          </li>
           <li><a href="study.html">Учеба</a></li>
           <li><a href="photoalbum.html">Фотоальбом</a></li>
+          <li><a href="history.html">История просмотра</a></li>
         </ul>
       </nav>
+      <span id="datetime"></span>
+      <script>
+        updateDateTime(); // Обновление времени сразу при загрузке
+        setInterval(updateDateTime, 1000); // Обновление каждую секунду
+      </script>
     </header>
     <section>
       <ul>

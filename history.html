@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+    <title>Персональный сайт Ипатова Сергея. История просмотра.</title>
+    <script src="JS/script.js"></script>
+    <script>window.onload = savePageView</script>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+          <ul>
+            <li><a href="main.html">Главная</a></li>
+            <li><a href="about_me.html">Обо мне</a></li>
+            <li>
+              <a href="interests.html">Мои интересы</a>
+              <ul>
+                <li><a href="interests.html#fav_books">Любимые книги</a></li>
+                <li><a href="interests.html#fav_movies">Любимые фильмы</a></li>
+                <li><a href="interests.html#fav_langs">Любимые ЯП</a></li>
+              </ul>
+            </li>
+            <li><a href="study.html">Учеба</a></li>
+            <li><a href="photoalbum.html">Фотоальбом</a></li>
+            <li class="current"><a href="history.html">История просмотра</a></li>
+          </ul>
+        </nav>
+        <span id="datetime"></span>
+        <script>
+          updateDateTime(); // Обновление времени сразу при загрузке
+          setInterval(updateDateTime, 1000); // Обновление каждую секунду
+        </script>
+    </header>
+    <h1>История просмотра</h1>
+    <h2>История текущего сеанса</h2>
+    <table id="sessionHistoryTable">
+        <thead>
+            <tr>
+                <th>Страница</th>
+                <th>Количество посещений</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    <h2>История за все время</h2>
+    <table id="allTimeHistoryTable">
+        <thead>
+            <tr>
+                <th>Страница</th>
+                <th>Количество посещений</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    <script>
+        window.onload = loadHistory;
+    </script>
+</body>
+</html>

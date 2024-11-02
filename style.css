@@ -1,59 +1,196 @@
 header {
-    background-color: bisque;
-    padding: 10px;
-}
-a{
-    text-decoration: none;
-}
-
-nav ul li{
-    display: inline;
-    margin: 10px;
+  background-color: bisque;
+  padding: 10px;
+  display: flex;
+  align-items: center;
 }
 
-nav ul{
-    padding-inline-start: 10px;
+header nav {
+  display: inline-block;
 }
 
-td.bold{
-    font-weight: bold;
+a {
+  text-decoration: none;
+  color: black;
 }
 
-td.center, th.center{
-    text-align: center;
+nav ul li {
+  display: inline;
+  margin: 10px;
 }
 
-td.left{
-    text-align: left;
+nav ul {
+  padding-inline-start: 10px;
 }
 
-tr.right{
-    text-align: right;
+td.bold {
+  font-weight: bold;
 }
 
-table{
-    border-spacing: 0;
-    border-collapse: collapse;
+td.center,
+th.center {
+  text-align: center;
 }
 
-p.text{
-    font-family: Arial, Helvetica, sans-serif;
+td.left {
+  text-align: left;
 }
 
-.album-body{
-        
+tr.right {
+  text-align: right;
 }
 
-.album-row{
-    display:flex;
-    justify-content: center;
-    
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
 }
 
-.album-item{
-    width: 400px;
-    display:flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+p.text {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.album-row {
+  display: flex;
+  justify-content: center;
+}
+
+.album-item {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+nav ul li a:hover,
+nav ul li.current>a {
+  font-weight: bold;
+}
+
+nav ul li {
+  position: relative;
+  display: inline-block;
+}
+
+nav ul ul {
+  display: none;
+  border-radius: 5px;
+  position: absolute;
+  width: 200px;
+  background-color: ghostwhite;
+  z-index: 1;
+}
+
+nav ul li:hover ul {
+  display: block;
+}
+
+nav ul ul li {
+  display: block;
+}
+
+#datetime {
+  margin-left: auto;
+}
+
+img.icon {
+  height: 24px;
+  width: 24px;
+}
+
+.field-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.field-title {
+  width: 120px;
+}
+
+.calendar-container {
+  display: none;
+  position: absolute;
+  z-index: 1;
+  top: 25px;
+  left: 40px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  background-color: #fff;
+}
+
+.calendar-container select {
+  margin: 5px;
+}
+
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+  text-align: center;
+}
+
+.calendar button {
+  padding: 5px;
+  border: 1px solid #ccc;
+  background: none;
+  cursor: pointer;
+}
+
+.calendar .header {
+  font-weight: bold;
+}
+
+input[name="birth-date"] {
+  display: block;
+}
+
+.valid {
+  border: 2px solid green;
+}
+
+.invalid {
+  border: 2px solid red;
+}
+
+.error-message {
+  margin-left: 10px;
+  color: red;
+  display: none;
+}
+
+.submit-button {
+  cursor: not-allowed;
+}
+
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.8);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+.overlay img {
+  height: 500px;
+}
+
+.center{
+  text-align: center;
+}
+
+.album-item img{
+  height: 200px;
+  cursor: pointer;
+}
+
+.return-ref{
+  padding: 5px;
+  border: 1px solid, gray;
+  border-radius: 3px;
 }
