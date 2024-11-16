@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <title>Персональный сайт Ипатова Сергея. Тест по БЖД.</title>
     <script src="JS/script.js"></script>
-    <script>window.onload = savePageView</script>
+    <script src="JS/jquery-3.7.1.js"></script>
+    <script>$(document).ready(function(){savePageView();});</script>
 </head>
-<body onload="headerOnLoad()">
+<body>
     <h1>Семь раз подумай, один раз ответь</h1>
     <form name="mainForm" method="POST" action="" onsubmit="return validateForm()">
         ФИО: <input title="ФИО" name="FIO" type="text" size="50">

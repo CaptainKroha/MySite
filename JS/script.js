@@ -1,8 +1,44 @@
 function printAlbum() {
-  let photos = [];
-  for (let i = 1; i < 16; i++) {
-    photos[i - 1] = `IMGS/${i}.jpg`;
+  const photosMap = getPhotosWTitles();
+
+  const photosCount = photosMap.size;
+  const photosInRow = 3;
+  const photoRows = photosCount / photosInRow;
+
+  for(let currentRowOffset = 0; currentRowOffset < photoRows; currentRowOffset++){
+    const currentRowPhotos = getSliceOfMap(photosMap, currentRowOffset, photosInRow);
+    let rowDiv = getAlbumRow(currentRowPhotos);
+    $(".album-body").append(rowDiv);
   }
+}
+
+function getSliceOfMap(map, offset, quantity){
+  return new Map(Array.from(map.entries()).splice(offset*quantity, quantity));
+}
+
+function getAlbumRow(currentRowPhotos){
+  let rowDiv = $("<div></div>").addClass("album-row");
+    for(let photoSrc of currentRowPhotos.keys()){
+      let currentPhotoTitle = currentRowPhotos.get(photoSrc);
+      let photoDiv = getPhotoItem(photoSrc, currentPhotoTitle);
+      rowDiv.append(photoDiv);
+    }
+  return rowDiv;
+}
+
+function getPhotoItem(photoSrc, photoTitle){
+  let photoDiv = $("<div></div>").addClass("album-item");
+      let photoImg = $("<img></img>").
+        attr({
+          "src":photoSrc,
+          "alt":photoTitle
+        });
+      let photoTitleP = $("<p></p>").text(photoTitle);
+      photoDiv.append(photoImg, photoTitleP);
+    return photoDiv; 
+}
+
+function getTitlesFotAlbum(){
   let titles = [
     "Колбаски на костре",
     "Романтический ужин",
@@ -20,50 +56,52 @@ function printAlbum() {
     "Киска 1",
     "Киска 2"
   ];
-  for (let i = 0; i < 15; i += 3) {
-    document.write(
-      '<div class="album-row">',
-        '<div class="album-item">',
-          `<img src=${photos[i]} alt=${titles[i]} onclick=showImage("${photos[i]}")>`,
-          `<p>${titles[i]}</p>`,
-        "</div>",
-        '<div class="album-item">',
-          `<img src=${photos[i+1]} alt=${titles[i+1]} onclick=showImage("${photos[i+1]}")>`,
-          `<p>${titles[i+1]}</p>`,
-        "</div>",
-        '<div class="album-item">',
-          `<img src=${photos[i+2]} alt=${titles[i+2]} onclick=showImage("${photos[i+2]}")>`,
-          `<p>${titles[i+2]}</p>`,
-        "</div>",
-      "</div>"
-    );
-  }
+  return titles; 
 }
 
-function showImage(src) {
-  const overlay = document.getElementById('overlay');
-  const largeImage = document.getElementById('largeImage');
-  largeImage.src = src;
-  overlay.style.display = 'flex';
+function getPhotoNames(){
+  let photos = [];
+  for (let i = 1; i < 16; i++) {
+    photos[i - 1] = `IMGS/${i}.jpg`;
+  }
+  return photos; 
+}
+
+function getPhotosWTitles(){
+  let photosWTitles = new Map;
+  const photos = getPhotoNames();
+  const titles = getTitlesFotAlbum();
+  for(let i = 0; i < photos.length; i++){
+    photosWTitles.set(photos[i], titles[i]);
+  }
+  return photosWTitles;
+}
+
+function showImage() {
+  if(event.target.hasAttribute("src")){
+    $("#overlay").css("display", "flex");
+    $("#largeImage").attr("src", event.target.src);
+  }
 }
 
 function closeOverlay() {
-  document.getElementById('overlay').style.display = 'none';
+  $("#overlay").css("display", "none");
 }
 
 function printListOfInterests(anc_name, title) {
-  document.write("<section><h2><a name=", anc_name, ">", title, "</a></h2>");
+  let section_title = $("<h2></h2>");
+  section_title.append($("<a></a>").attr("name", anc_name).text(title));
+  let section = $("<section></section>").attr("id", "interests-section");
+  section.append(section_title);
   for (let i = 2; i < printListOfInterests.arguments.length; i++) {
     let item = printListOfInterests.arguments[i];
-    document.write(
-      "<article>",
-        `<h3>${item[0]}</h3>`,
-        `<img src=${item[1]} width="200px">`,
-        `<p class="text">${item[2]}</p>`,
-      "</article>"
-    );
+    let article = $("<acrticle></article>")
+      .append($("<h3></h3>").text(item[0]))
+      .append($("<img></img>").attr({"src":item[1],"width":"200px"}))
+      .append($("<p></p>").addClass("text").text(item[2]));
+    section.append(article);
   }
-  document.write("</section>");
+  $("body").append(section);
 }
 
 function validateForm() {
@@ -116,17 +154,6 @@ function validateTest() {
   }
 }
 
-function headerOnLoad() {
-  const currentLocation = location.href;
-  const menuItem = document.querySelectorAll("nav ul li a");
-  const menuLength = menuItem.length;
-  for (let i = 0; i < menuLength; i++) {
-    if (menuItem[i].href === currentLocation) {
-      menuItem[i].parentElement.classList.add("current");
-    }
-  }
-}
-
 function updateDateTime() {
   const daysOfWeek = [
     "Воскресенье",
@@ -143,153 +170,142 @@ function updateDateTime() {
   const year = String(now.getFullYear()).slice(-2); // Двухзначный формат года
   const dayOfWeek = daysOfWeek[now.getDay()];
   const dateTimeString = `${day}.${month}.${year} ${dayOfWeek}`;
-  document.getElementById("datetime").textContent = dateTimeString;
+  $("#datetime").text(dateTimeString);
 }
 
 function createCalendar(year, month) {
-  const calendar = document.getElementById("calendar");
-  calendar.innerHTML = `
-      <div class="header">Sun</div>
-      <div class="header">Mon</div>
-      <div class="header">Tue</div>
-      <div class="header">Wed</div>
-      <div class="header">Thu</div>
-      <div class="header">Fri</div>
-      <div class="header">Sat</div>
-    `;
+  let calendar = $("#calendar");
+  calendar.html("");
+  let weekdays = getWeekdaysArray();
+  for(let weekday of weekdays){
+    calendar.append($("<div></div>").addClass("header").text(weekday));
+  }
 
   const firstDay = new Date(year, month, 1).getDay();
   const daysInMonth = 32 - new Date(year, month, 32).getDate();
 
   for (let i = 0; i < firstDay; i++) {
-    calendar.innerHTML += "<div></div>";
+    calendar.append($("<div></div>"));
   }
 
   for (let day = 1; day <= daysInMonth; day++) {
-    calendar.innerHTML += `<button onclick="selectDate(${year}, ${month}, ${day})">${day}</button>`;
+    calendar.append($("<button></button>").text(day).click(function(){
+      selectDate(year, month, day);
+    }));
   }
+}
+
+function getWeekdaysArray(){
+  return ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+}
+
+function getMonths(){
+  return ["January", "February", "March", "April", "May", "June", 
+    "July", "August", "September", "October", "November", "December"];
 }
 
 function selectDate(year, month, day) {
   event.preventDefault();
-  const monthNames = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
+  const monthNames = getMonths();
   const dateString = `${monthNames[month]}/${day}/${year}`;
-  document.querySelector('input[name="birthdate"]').value = dateString;
-  const input = document.getElementsByName("birthdate")[0];
-  validateField(input);
+  let birthdateInput = $("input[name='birthdate']");
+  birthdateInput.val(dateString);
+  validateField(birthdateInput);
 }
 
 function calendarOnClick() {
-  const calendarContainer = document.getElementById("calendar-container");
-  if (calendarContainer.style.display === "block") {
-    calendarContainer.style.display = "none";
-  } else {
-    calendarContainer.style.display = "block";
+  const calendarContainer = $("#calendar-container");
 
-    const yearSelect = document.getElementById("year-select");
+  if(calendarContainer.css("display") === "block") {
+    calendarContainer.css("display", "none");
+  } 
+  else {
+    let yearSelect = $("#year-select");
     const currentYear = new Date().getFullYear();
-    if (yearSelect.options.length === 0) {
-      for (let i = currentYear - 100; i <= currentYear; i++) {
-        const option = document.createElement("option");
-        option.value = i;
-        option.text = i;
-        yearSelect.appendChild(option);
-      }
+    if (yearSelect.children().length === 0) {
+        for (let i = currentYear - 100; i <= currentYear; i++) {
+          let option = $("<option></option>").val(i).text(i);
+          yearSelect.append(option);
+        }
     }
-    yearSelect.value = currentYear;
+    yearSelect.val(currentYear);
 
-    const monthSelect = document.getElementById("month-select");
+    const monthSelect = $("#month-select");
     const currentMonth = new Date().getMonth();
-    monthSelect.value = currentMonth;
+    monthSelect.val(currentMonth);
 
     createCalendar(currentYear, currentMonth);
+
+    calendarContainer.css("display", "block");
   }
 }
 
 function bodyOnLoad() {
-  document
-    .getElementById("year-select")
-    .addEventListener("change", function () {
+
+  $("#year-select").change(function(){
       const year = this.value;
-      const month = document.getElementById("month-select").value;
-      createCalendar(year, month);
-    });
-
-  document
-    .getElementById("month-select")
-    .addEventListener("change", function () {
-      const month = this.value;
-      const year = document.getElementById("year-select").value;
-      createCalendar(year, month);
-    });
-
-  document.addEventListener("click", function (event) {
-    calendarConteiner = document.getElementById("calendar-container");
-    if (!calendarConteiner.contains(event.target)) {
-      triggerEvent(document.getElementById("calendar-icon"), "onclick");
-    }
+      const month = $("#month-select").val();
+      createCalendar(year, month);  
   });
 
-  const form = document.getElementById("mainForm");
-  const inputs = form.getElementsByTagName("input");
-  const submitButton = document.getElementById("submitButton");
+  $("#month-select").change(function(){
+    const month = this.value;
+    const year = $("#year-select").val();
+    createCalendar(year, month); 
+  });
 
-  form.addEventListener("input", () => {
+  const form = $("#mainForm");
+  const textInputs = form.find("input[type='text']");
+  const submitButton =$("#submitButton");
+
+  form.change(function(){
     let isFormValid = true;
-    for (let input of inputs) {
-      if (input.type !== "text") continue;
-      if (input.classList.contains("invalid") || !input.classList.contains("valid")) {
+    textInputs.each(function(index, element){
+      if ($(element).hasClass("invalid") || !$(element).hasClass("valid")) {
         isFormValid = false;
       }
-    }
-    submitButton.disabled = !isFormValid;
-    submitButton.style.cursor = isFormValid ? "pointer" : "not-allowed";
+    });
+    submitButton.attr("disabled", !isFormValid);
+    submitButton.css("cursor", isFormValid ? "pointer" : "not-allowed");
   });
 
-  for (let input of inputs) {
-    if (input.name === "birthdate") continue;
-    input.addEventListener("blur", () => validateField(input));
-  }
+  textInputs.each(function(index, element){
+    if ($(element).attr("name") === "birthdate") return;
+    $(element).blur(function(){
+      validateField(this);
+    });
+  });
 }
 
 function validateField(input) {
-  const form = document.getElementById("mainForm");
-  const errorElement = document.getElementById(input.name + "Error");
-  let functionName = `validate${input.name}`;
-  let validationResult = input.value.trim() !== "";;
+
+  let inputElem = $(input);
+  const inputName = inputElem.attr("name");
+  const errorElement = $(`#${inputName}Error`);
+  
+  let functionName = `validate${inputName}`;
+  let validationResult = inputElem.val().trim() !== "";
   if(validationResult === false){
-    errorElement.innerHTML = "Поле не заполнено";
+    errorElement.html("Поле не заполнено");
   }
   if (validationResult && typeof window[functionName] === "function") {
-    validationResult = window[functionName](input, errorElement);
+    validationResult = window[functionName](inputElem, errorElement);
   }
 
   if (validationResult) {
-    input.classList.add("valid");
-    input.classList.remove("invalid");
-    errorElement.style.display = "none";
-    triggerEvent(form, 'input');
-    return true;
+    inputElem.addClass("valid");
+    inputElem.removeClass("invalid");
+    errorElement.css("display", "none");
   } else {
-    input.classList.add("invalid");
-    input.classList.remove("valid");
-    errorElement.style.display = "inline";
-    triggerEvent(form, 'input');
-    return false;
+    inputElem.addClass("invalid");
+    inputElem.removeClass("valid");
+    errorElement.css("display", "inline");
   }
+
+  const form = document.getElementById("mainForm");
+  triggerEvent(form, 'change');
+  return validationResult;
+
   
 }
 
@@ -309,8 +325,8 @@ function validatephone(input, errorElement) {
 }
 
 function validateByPattern(input, pattern, errorElement){
-  if (!pattern.test(input.value)) {
-    errorElement.innerHTML = "Поле заполнено некорректно";
+  if (!pattern.test(input.val())) {
+    errorElement.html("Поле заполнено некорректно");
     return false;
   }
   else {
@@ -337,9 +353,9 @@ function savePageView() {
   let page = document.title;
   
   // Update session history in Local Storage
-  let sessionHistory = JSON.parse(localStorage.getItem('sessionHistory')) || {};
+  let sessionHistory = JSON.parse(sessionStorage.getItem('sessionHistory')) || {};
   sessionHistory[page] = (sessionHistory[page] || 0) + 1;
-  localStorage.setItem('sessionHistory', JSON.stringify(sessionHistory));
+  sessionStorage.setItem('sessionHistory', JSON.stringify(sessionHistory));
 
   // Update all-time history in Cookies
   let allTimeHistory = JSON.parse(getCookie('allTimeHistory') || '{}');
@@ -349,7 +365,7 @@ function savePageView() {
 
 function loadHistory() {
   // Load session history from Local Storage
-  let sessionHistory = JSON.parse(localStorage.getItem('sessionHistory')) || {};
+  let sessionHistory = JSON.parse(sessionStorage.getItem('sessionHistory')) || {};
   let sessionTable = document.getElementById('sessionHistoryTable').getElementsByTagName('tbody')[0];
   for (let page in sessionHistory) {
       let row = sessionTable.insertRow();
@@ -369,4 +385,84 @@ function loadHistory() {
       cell1.textContent = page;
       cell2.textContent = allTimeHistory[page];
   }
+}
+
+function loadHeader(){
+
+  let pages = getPagesMap();
+  let interestsPageRef = getInterestsPageRef();
+  const currentPageRef = getCurrentPageRef();
+
+  let header = $("<header></header>");
+  let nav = $("<nav></nav>");
+  let ul = $("<ul></ul>");
+  for (const pageRef of pages.keys()){
+    let a = $("<a></a>").attr("href", pageRef).text(pages.get(pageRef));
+    let li = $("<li></li>").append(a);
+    if(pageRef === currentPageRef){
+      li.attr("class", "current");
+    }
+    if(pageRef === interestsPageRef){
+      appendInterestUl(li);
+    }
+    ul.append(li);
+  }
+  nav.append(ul);
+  let spanDateTime = $("<span></span>").attr("id", "datetime");
+  header.append(nav,spanDateTime);
+  $("body").prepend(header);
+  updateDateTime();
+  setInterval(updateDateTime, 1000);
+}
+
+function getPagesMap(){
+  let pages = new Map;
+  pages.set("main.html", "Главная");
+  pages.set("about_me.html", "Обо мне");
+  pages.set("interests.html", "Мои интересы");
+  pages.set("study.html", "Учеба");
+  pages.set("photoalbum.html", "Фотоальбом");
+  pages.set("history.html", "История просмотра");
+  return pages;
+}
+
+function getInterestAnchorsMap(){
+  let interestsAnchors = new Map;
+  interestsAnchors.set("fav_books", "Любимые книги");
+  interestsAnchors.set("fav_movies", "Любимые фильмы");
+  interestsAnchors.set("fav_langs", "Любимые ЯП");
+  return interestsAnchors;
+}
+
+function getInterestList(){
+  let interestsAnchors = getInterestAnchorsMap();
+  pageRef = getInterestsPageRef();
+  let interestsUl = $("<ul></ul>");
+    for(const anchor of interestsAnchors.keys()){
+      let interestsA = $("<a></a>").
+        attr("href", pageRef + "#" + anchor).
+        text(interestsAnchors.get(anchor));
+      let interestsLi = $("<li></li>").append(interestsA);
+      interestsUl.append(interestsLi);
+    }
+  return interestsUl;
+}
+
+function getInterestsPageRef(){
+  return "interests.html";
+}
+
+function appendInterestUl(element){
+  let interestsUl = getInterestList();
+  element.append(interestsUl);
+}
+
+function isCurrentPage(pageRef){
+  return pageRef === getCurrentPageRef();
+}
+
+function getCurrentPageRef(){
+  const url = document.URL;
+  const parts = url.split('/');
+  return parts.pop();
 }

@@ -4,7 +4,14 @@
     <meta charset="utf-8" />
     <link rel="stylesheet" type="text/css" href="style.css" />
     <title>Персональный сайт Ипатова Сергея. Контакт.</title>
+    <script src="JS/jquery-3.7.1.js"></script>
     <script src="JS/script.js"></script>
+    <script>
+      $(document).ready(function(){
+        $("#FIO").focus();
+        bodyOnLoad();
+      });
+    </script>
   </head>
   <body>
     <h1>Заполни анкету для связи со мной!</h1>
@@ -72,10 +79,5 @@
     </form>
     <hr />
     <a class="return-ref" href="main.html">Вернуться на главную</a>
-
-    <script>
-      document.getElementById('FIO').focus();
-      document.querySelector("body").addEventListener("onload", bodyOnLoad());
-    </script>
   </body>
 </html>

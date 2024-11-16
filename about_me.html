@@ -5,33 +5,10 @@
     <link rel="stylesheet" type="text/css" href="style.css"/>
     <title>Персональный сайт Ипатова Сергея. Обо мне.</title>
     <script src="JS/script.js"></script>
-    <script>window.onload = savePageView</script>
+    <script src="JS/jquery-3.7.1.js"></script>
+    <script>$(document).ready(function(){savePageView(); loadHeader()});</script>
 </head>
 <body>
-  <header>
-    <nav>
-      <ul>
-        <li><a href="main.html">Главная</a></li>
-        <li class="current"><a href="about_me.html">Обо мне</a></li>
-        <li>
-          <a href="interests.html">Мои интересы</a>
-          <ul>
-            <li><a href="interests.html#fav_books">Любимые книги</a></li>
-            <li><a href="interests.html#fav_movies">Любимые фильмы</a></li>
-            <li><a href="interests.html#fav_langs">Любимые ЯП</a></li>
-          </ul>
-        </li>
-        <li><a href="study.html">Учеба</a></li>
-        <li><a href="photoalbum.html">Фотоальбом</a></li>
-        <li><a href="history.html">История просмотра</a></li>
-      </ul>
-    </nav>
-    <span id="datetime"></span>
-    <script>
-      updateDateTime(); // Обновление времени сразу при загрузке
-      setInterval(updateDateTime, 1000); // Обновление каждую секунду
-    </script>
-  </header>
       <article>
         <p class="text">Родился я в г.Севастополь 4 августа 2003 года. С раннего дества занимался современными танцами, ходил в садик. 
           Как пошел в школу, начал заниматься тхэквондо, которым я занимался около 5 лет своей жизни. 
