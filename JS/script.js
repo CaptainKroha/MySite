@@ -1,3 +1,52 @@
+function albumOnLoad(){
+  printAlbum();
+
+  $(".arrow-img").click(function(){
+    switchPhoto(this);
+  });
+}
+function switchPhoto(element){
+
+  event.stopPropagation();
+  let arrow = $(element);
+  let currentPhoto = findCurrentPhoto();
+  let allPhotos = $("#album-body").find("img");
+  let currentPhotoIndex = 0;
+  allPhotos.each(function(index, element){
+    if($(element).attr("src") === currentPhoto.attr("src")){
+      currentPhotoIndex = index;
+    }
+  });
+  let newPhoto = undefined;
+  if(arrow.attr("id") == "left-arrow"){
+    if(currentPhotoIndex === 0)
+      newPhoto = allPhotos.eq(allPhotos.length - 1);
+    else
+      newPhoto = allPhotos.eq(currentPhotoIndex - 1);
+  }
+  else{
+    if(currentPhotoIndex === allPhotos.length - 1)
+      newPhoto = allPhotos.eq(0);
+    else
+      newPhoto = allPhotos.eq(currentPhotoIndex + 1);
+  }
+  updateLargeImage(newPhoto);
+
+}
+
+function updateLargeImage(newPhoto){
+  $("#largeImage").attr({
+    "src":$(newPhoto).attr("src"),
+    "alt":$(newPhoto).attr("alt")
+  });  
+}
+
+function findCurrentPhoto(){
+  const largeImageSrc = $("#largeImage").attr("src");
+  let currentPhoto = $("#album-body").find(`img[src='${largeImageSrc}']`);
+  return currentPhoto;
+}
+
 function printAlbum() {
   const photosMap = getPhotosWTitles();
 
@@ -8,7 +57,7 @@ function printAlbum() {
   for(let currentRowOffset = 0; currentRowOffset < photoRows; currentRowOffset++){
     const currentRowPhotos = getSliceOfMap(photosMap, currentRowOffset, photosInRow);
     let rowDiv = getAlbumRow(currentRowPhotos);
-    $(".album-body").append(rowDiv);
+    $("#album-body").append(rowDiv);
   }
 }
 
@@ -80,7 +129,7 @@ function getPhotosWTitles(){
 function showImage() {
   if(event.target.hasAttribute("src")){
     $("#overlay").css("display", "flex");
-    $("#largeImage").attr("src", event.target.src);
+    $("#largeImage").attr("src", $(event.target).attr("src"));
   }
 }
 
