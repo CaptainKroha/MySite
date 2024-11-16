@@ -109,6 +109,11 @@ img.icon {
   width: 120px;
 }
 
+.field-tip-container{
+  display: none;
+  margin-left: 10px;
+}
+
 .calendar-container {
   display: none;
   position: absolute;
@@ -171,13 +176,38 @@ input[name="birth-date"] {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0,0,0,0.8);
   justify-content: space-between;
   align-items: center;
   z-index: 1000;
 }
+
+.bg-blur-black{
+  background-color: rgba(0,0,0,0.8);
+}
+
+.bg-blur-white{
+  background-color: rgba(255,255,255,0.8);
+}
+
 .overlay img#largeImage {
   height: 500px;
+}
+
+.modal-span{
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin-top: 15px;
+}
+
+.modal-window{
+  display: inherit;
+  align-items: flex-start;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  height: 100px;
+  width: 300px;
+  border: 2px solid black;
 }
 
 img.arrow-img{

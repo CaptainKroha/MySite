@@ -7,19 +7,21 @@
     <script src="JS/jquery-3.7.1.js"></script>
     <script src="JS/script.js"></script>
     <script>
-      $(document).ready(function(){
+      $(document).ready(()=>{
         $("#FIO").focus();
         bodyOnLoad();
+        setupModalWindow();
       });
     </script>
   </head>
   <body>
     <h1>Заполни анкету для связи со мной!</h1>
-    <form id="mainForm" name="mainForm" method="POST" action="" onsubmit="return validateForm()">
+    <form id="mainForm" name="mainForm" method="POST">
       <div class="field-container">
         <label class="field-title">ФИО:</label>
         <input title="ФИО" name="FIO" type="text" size="50" id="FIO"/>
         <span class="error-message" id="FIOError">Поле не заполнено</span>
+        <div class="pop-over field-tip-container">Формат ввода ФИО: Фамилия Имя Отчество</div>
       </div>
       <div class="field-container">
         <label class="field-title">Пол:</label> 
@@ -70,13 +72,21 @@
         <label class="field-title">Моб.тел.:</label>
         <input title="Мобильный телефон" name="phone" type="text" size="30" />
         <span class="error-message" id="phoneError">Поле не заполнено</span>
-      </div>       
-      
+        <div class="pop-over field-tip-container">Формат ввода телефона: +71234567890</div>
+      </div>
       <br /><br />
-
-      <input type="submit" class="submit-button" id="submitButton" disabled/>
+      <button type="button" class="submit-button" id="submitButton"  disabled>Отправить</button>
       <input type="reset" />
-    </form>
+
+      <div id="overlay" class="overlay bg-blur-white" style="justify-content: center;">
+        <div class="modal-window">
+          <span class="modal-span">Подтвердить отправку формы?</span>
+          <button type="submit" id="yesButton" onclick="submitForm()">Да</button>
+          <button type="button" id="noButton" onclick="closeOverlay()">Нет</button>
+        </div>
+      </div>
+
+    </form>  
     <hr />
     <a class="return-ref" href="main.html">Вернуться на главную</a>
   </body>

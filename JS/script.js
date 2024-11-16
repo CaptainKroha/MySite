@@ -240,6 +240,7 @@ function createCalendar(year, month) {
   for (let day = 1; day <= daysInMonth; day++) {
     calendar.append($("<button></button>").text(day).click(function(){
       selectDate(year, month, day);
+      calendarOnClick();
     }));
   }
 }
@@ -292,9 +293,9 @@ function calendarOnClick() {
 function bodyOnLoad() {
 
   $("#year-select").change(function(){
-      const year = this.value;
-      const month = $("#month-select").val();
-      createCalendar(year, month);  
+    const year = this.value;
+    const month = $("#month-select").val();
+    createCalendar(year, month);  
   });
 
   $("#month-select").change(function(){
@@ -307,15 +308,25 @@ function bodyOnLoad() {
   const textInputs = form.find("input[type='text']");
   const submitButton =$("#submitButton");
 
-  form.change(function(){
-    let isFormValid = true;
-    textInputs.each(function(index, element){
-      if ($(element).hasClass("invalid") || !$(element).hasClass("valid")) {
-        isFormValid = false;
-      }
-    });
-    submitButton.attr("disabled", !isFormValid);
-    submitButton.css("cursor", isFormValid ? "pointer" : "not-allowed");
+  form.on({
+    change: () => {
+      let isFormValid = true;
+      textInputs.each(function(index, element){
+        if ($(element).hasClass("invalid") || !$(element).hasClass("valid")) {
+          isFormValid = false;
+        }
+      });
+      submitButton.attr("disabled", !isFormValid);
+      submitButton.css("cursor", isFormValid ? "pointer" : "not-allowed");
+    },
+    reset: () => {
+      $(".valid").removeClass("valid");
+      $(".invalid").removeClass("invalid");
+      $("#FIO").focus();
+    },
+    submit: () => {
+      form.trigger("reset");
+    }
   });
 
   textInputs.each(function(index, element){
@@ -324,6 +335,35 @@ function bodyOnLoad() {
       validateField(this);
     });
   });
+
+  let field_containers = $(document).find(".field-container");
+  field_containers.each(function(index, element){
+    let tipContainer = $(element).find("div.field-tip-container");
+    $(tipContainer).hide();
+    if(tipContainer.length !== 0){
+      let inputField = $(element).find("input");
+      inputField.hover(
+        function(){
+          $(tipContainer).fadeIn(4*100);  
+        }, 
+        function(){
+          setTimeout(() => {$(tipContainer).fadeOut(4*100);}, 3000);
+        }
+      );
+    }
+  });
+}
+
+function setupModalWindow(){
+  const submitButton = $("#submitButton");
+
+  submitButton.click(() => {
+    $(".overlay").css("display", "flex"); 
+  });
+}
+
+function submitForm(){
+  closeOverlay();
 }
 
 function validateField(input) {
@@ -351,16 +391,11 @@ function validateField(input) {
     errorElement.css("display", "inline");
   }
 
-  const form = document.getElementById("mainForm");
-  triggerEvent(form, 'change');
+  const form = $("#mainForm");
+  form.trigger("change");
   return validationResult;
 
   
-}
-
-function triggerEvent(element, eventName) {
-  let event = new Event(eventName);
-  element.dispatchEvent(event);
 }
 
 function validateFIO(input, errorElement) {
