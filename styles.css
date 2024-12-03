@@ -1,0 +1,208 @@
+header {
+  background-color: bisque;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+}
+header nav {
+  display: inline-block;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+nav ul {
+  padding-inline-start: 10px;
+}
+nav ul li {
+  display: inline;
+  margin: 10px;
+}
+nav ul li a:hover, nav ul li.current > a {
+  font-weight: bold;
+}
+nav ul li:hover ul {
+  display: block;
+}
+nav ul ul {
+  display: none;
+  border-radius: 5px;
+  position: absolute;
+  left: 200px;
+  width: 200px;
+  background-color: ghostwhite;
+  z-index: 1;
+}
+nav ul ul li {
+  display: block;
+}
+
+td.bold {
+  font-weight: bold;
+}
+td.center, td th.center {
+  text-align: center;
+}
+td.left {
+  text-align: left;
+}
+td.right {
+  text-align: right;
+}
+
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+p.text {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.album-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.album-item {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#datetime {
+  margin-left: auto;
+}
+
+img.icon {
+  height: 24px;
+  width: 24px;
+}
+
+.field-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+  margin-bottom: 10px;
+}
+.field-container .field-title {
+  width: 120px;
+}
+.field-container .field-tip-container {
+  display: none;
+  margin-left: 10px;
+}
+
+.calendar-container {
+  display: none;
+  position: absolute;
+  z-index: 1;
+  top: 25px;
+  left: 40px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  background-color: white;
+}
+.calendar-container select {
+  margin: 5px;
+}
+.calendar-container .calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+  text-align: center;
+}
+.calendar-container .calendar button {
+  padding: 5px;
+  border: 1px solid #ccc;
+  background: none;
+  cursor: pointer;
+}
+.calendar-container .calendar .header {
+  font-weight: bold;
+}
+
+input[name=birth-date] {
+  display: block;
+}
+
+.valid {
+  border: 2px solid green;
+}
+
+.invalid {
+  border: 2px solid red;
+}
+
+.error-message {
+  margin-left: 10px;
+  color: red;
+  display: none;
+}
+
+.submit-button {
+  cursor: not-allowed;
+}
+
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
+}
+.overlay.bg-blur-black {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+.overlay.bg-blur-white {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+.overlay img#largeImage {
+  height: 500px;
+}
+.overlay .modal-span {
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin-top: 15px;
+}
+.overlay .modal-window {
+  display: inherit;
+  align-items: flex-start;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  height: 100px;
+  width: 300px;
+  border: 2px solid black;
+}
+.overlay img.arrow-img {
+  width: 64px;
+  height: 64px;
+}
+
+.center {
+  text-align: center;
+}
+
+.album-item img {
+  height: 200px;
+  cursor: pointer;
+}
+
+.return-ref {
+  padding: 5px;
+  border: 1px solid gray;
+  border-radius: 3px;
+}
+
+/*# sourceMappingURL=styles.css.map */

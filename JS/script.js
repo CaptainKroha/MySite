@@ -5,7 +5,7 @@ function albumOnLoad(){
     switchPhoto(this);
   });
 }
-function switchPhoto(element){
+function switchPhoto(element, event = window.event){
 
   event.stopPropagation();
   let arrow = $(element);
@@ -37,7 +37,8 @@ function switchPhoto(element){
 function updateLargeImage(newPhoto){
   $("#largeImage").attr({
     "src":$(newPhoto).attr("src"),
-    "alt":$(newPhoto).attr("alt")
+    "alt":$(newPhoto).attr("alt"),
+    "title":$(newPhoto).attr("title")
   });  
 }
 
@@ -80,14 +81,15 @@ function getPhotoItem(photoSrc, photoTitle){
       let photoImg = $("<img></img>").
         attr({
           "src":photoSrc,
-          "alt":photoTitle
+          "alt":photoTitle,
+          "title":photoTitle
         });
       let photoTitleP = $("<p></p>").text(photoTitle);
       photoDiv.append(photoImg, photoTitleP);
     return photoDiv; 
 }
 
-function getTitlesFotAlbum(){
+function getTitlesForAlbum(){
   let titles = [
     "Колбаски на костре",
     "Романтический ужин",
@@ -119,7 +121,7 @@ function getPhotoNames(){
 function getPhotosWTitles(){
   let photosWTitles = new Map;
   const photos = getPhotoNames();
-  const titles = getTitlesFotAlbum();
+  const titles = getTitlesForAlbum();
   for(let i = 0; i < photos.length; i++){
     photosWTitles.set(photos[i], titles[i]);
   }
@@ -129,7 +131,7 @@ function getPhotosWTitles(){
 function showImage() {
   if(event.target.hasAttribute("src")){
     $("#overlay").css("display", "flex");
-    $("#largeImage").attr("src", $(event.target).attr("src"));
+    $("#largeImage").attr({"src": $(event.target).attr("src"), "title": $(event.target).attr("title"), "alt": $(event.target).attr("alt")});
   }
 }
 
